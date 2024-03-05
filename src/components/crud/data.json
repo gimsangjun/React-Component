@@ -1,0 +1,4 @@
+[
+  { "name": "John", "age": 35, "job": "frontend", "lang": "React", "pay": 3000 },
+  { "name": "Abc", "age": 36, "job": "backend", "lang": "java", "pay": 3300 }
+]
