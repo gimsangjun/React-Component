@@ -69,7 +69,7 @@ export default function Card({ data }) {
 
   return (
     <CardWrap>
-      <Img src={require(`${imgUrl}`)} alt="img" />
+      <Img src={`${process.env.PUBLIC_URL}${imgUrl}`} alt="img" />
       <div>
         {/* TODO: 아래 60글자도 상수로 관리 */}
         <Title id="title">{titleOverflow ? titleText.slice(0, 60) + "..." : titleText}</Title>
