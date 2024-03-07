@@ -1,0 +1,30 @@
+/* 
+  |-- slider-container 
+  |------ slick-slider slick-initalized
+  |------------ button: slick-arrow slick-prev
+  |------------ slick-list
+  |------------------- slick-track
+  |------------------------ slick-slide, slick-active, slicke-cloned
+  |------------ button: slick-arrow slick-prev
+  |------------ ul: slick-dots
+  |------------------ li: slick-active, x
+
+*/
+.slick-slider {
+  position: relative;
+  display: flex; /* 기본 스타일 수정: 슬라이더를 가로로 정렬하기 위해 flex 사용 */
+  justify-content: center; /* 슬라이더 아이템을 가로 중앙 정렬하기 위해 사용 */
+  align-items: center; /* 슬라이더 아이템을 세로 중앙 정렬하기 위해 사용 */
+}
+
+.slick-track {
+  display: flex;
+}
+
+/* 각 슬라이드 아이템의 스타일 수정 */
+.slick-slide {
+  display: flex; /* 슬라이드 아이템을 가로로 정렬하기 위해 flex 사용 */
+  justify-content: center; /* 슬라이드 아이템을 가로 중앙 정렬하기 위해 사용 */
+  align-items: center; /* 슬라이드 아이템을 세로 중앙 정렬하기 위해 사용 */
+  margin: 0 10px; /* 슬라이드 아이템 간의 간격 조정 */
+}
