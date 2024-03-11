@@ -1,0 +1,5 @@
+[
+  { "id": 1, "todo": "useState 학습", "checked": true },
+  { "id": 2, "todo": "useReducer 학습", "checked": true },
+  { "id": 3, "todo": "redux 학습", "checked": false }
+]
