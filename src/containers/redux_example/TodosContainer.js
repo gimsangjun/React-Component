@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import Todos from "../components/Todos";
-import { addTodo, toggleTodo, deleteTodo } from "../modules/todos";
+import Todos from "../../components/redux_example/Todos";
+import { addTodo, toggleTodo, deleteTodo } from "../../modules/todos";
 
 function TodosContainer() {
   // useSelector는 리덕스 스토어의 상태를 조회하는 Hook입니다.
