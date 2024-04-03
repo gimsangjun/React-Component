@@ -26,6 +26,16 @@ export default function Root() {
             Redux + 미들웨어 api : Pages
           </Link>
         </List>
+        <List>
+          <Link className="text-blue-500 hover:text-blue-700" to="/noticeboard/write">
+            게시판 글쓰기 : react-quill 라이브러리 사용
+          </Link>
+        </List>
+        <List>
+          <Link className="text-blue-500 hover:text-blue-700" to="/noticeboard/list">
+            게시판 글 목록보기 : react-quill 라이브러리 사용
+          </Link>
+        </List>
       </ul>
     </div>
   );
