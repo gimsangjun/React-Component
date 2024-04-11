@@ -4,18 +4,15 @@ import "react-quill/dist/quill.snow.css";
 import "./custom.css";
 import TagInput from "./TagInput";
 
-const Writer = ({ onWrite }) => {
-  const [title, setTitle] = useState(""); // 제목 상태 추가
-  const [content, setContent] = useState(""); // Editor state
-  const [tags, setTags] = useState([]); // 태그 상태 추가
+const Updater = ({ post, onUpdate }) => {
+  const [title, setTitle] = useState(post.title); // 제목 상태 추가
+  const [content, setContent] = useState(post.content); // Editor state
+  const [tags, setTags] = useState(post.tags); // 태그 상태 추가
   const quill = useRef();
 
   // Handler to handle button clicked
   function handleSummit() {
-    console.log("Title:", title);
-    console.log("Content", content);
-    console.log("Tags:", tags);
-    onWrite({ title, content, tags });
+    onUpdate({ title, content, tags });
   }
 
   // 추가할수 있는 기능 또는 플러그인 , ex : 글씨체, image올리기 등.
@@ -78,11 +75,11 @@ const Writer = ({ onWrite }) => {
           onClick={handleSummit}
           className="w-40 bg-blue-500 text-white font-semibold px-4 py-2 my-6"
         >
-          등록
+          수정
         </button>
       </div>
     </div>
   );
 };
 
-export default Writer;
+export default Updater;

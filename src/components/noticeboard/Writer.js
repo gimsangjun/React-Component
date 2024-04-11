@@ -12,9 +12,6 @@ const Writer = ({ onWrite }) => {
 
   // Handler to handle button clicked
   function handleSummit() {
-    console.log("Title:", title);
-    console.log("Content", content);
-    console.log("Tags:", tags);
     onWrite({ title, content, tags });
   }
 

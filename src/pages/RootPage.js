@@ -17,25 +17,16 @@ export default function Root() {
           </Link>
         </List>
         <List>
-          <Link className="text-blue-500 hover:text-blue-700" to="/counter">
-            Redux + 미들웨어 비동기 setTime: Counter
+          <Link className="text-blue-500 hover:text-blue-700" to="/post">
+            Redux + 미들웨어 api : Pages :redux마지막 부분
           </Link>
         </List>
         <List>
           <Link className="text-blue-500 hover:text-blue-700" to="/post">
-            Redux + 미들웨어 api : Pages
+            게시판: react-quill 라이브러리 사용, 비동기
           </Link>
         </List>
-        <List>
-          <Link className="text-blue-500 hover:text-blue-700" to="/noticeboard/write">
-            게시판 글쓰기 : react-quill 라이브러리 사용
-          </Link>
-        </List>
-        <List>
-          <Link className="text-blue-500 hover:text-blue-700" to="/noticeboard/list">
-            게시판 글 목록보기 : react-quill 라이브러리 사용
-          </Link>
-        </List>
+        수정,삭제, 업데이트
       </ul>
     </div>
   );
