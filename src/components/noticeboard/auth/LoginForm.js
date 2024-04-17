@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import { useCookies } from "react-cookie";
 import tw from "twin.macro";
+import { setCookie } from "../../../utils/cookieUtils";
 
 export default function LoginForm({ type, onLogin, sessionID, status, onSignUp }) {
   // const type = "login" or "register"
@@ -12,7 +12,6 @@ export default function LoginForm({ type, onLogin, sessionID, status, onSignUp }
     passwordConfirm: "",
   });
   const [passwordError, setPasswordError] = useState("");
-  const [cookies, setCookies] = useCookies(["sessionID"]);
 
   const { username, password, passwordConfirm } = formData;
   const navigate = useNavigate();
@@ -28,7 +27,8 @@ export default function LoginForm({ type, onLogin, sessionID, status, onSignUp }
   useEffect(() => {
     if (status === 200) {
       // 로그인 성공
-      setCookies("sessionID", sessionID, { path: "/" });
+      console.log(sessionID);
+      setCookie("sessionID", sessionID, 1);
       navigate("/post");
     }
     if (status === 401) {
@@ -44,7 +44,7 @@ export default function LoginForm({ type, onLogin, sessionID, status, onSignUp }
     if (status === 500) {
       // 회원가입중 오류 발생
     }
-  }, [status, navigate, setCookies, sessionID]);
+  }, [status, navigate, sessionID]);
 
   const handleSubmit = (e) => {
     e.preventDefault();

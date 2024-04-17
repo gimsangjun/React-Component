@@ -7,6 +7,7 @@ const API_DOMAIN = process.env.REACT_APP_API_DOMAIN;
 export const LOGIN_START = "auth/LOGIN_START";
 export const LOGIN_SUCCESS = "auth/LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "auth/LOGIN_FAILURE";
+export const LOGOUT = "auth/LOGOUT";
 export const SIGNUP_START = "auth/SIGNUP_START";
 export const SIGNUP_SUCCESS = "auth/SIGNUP_SUCCESS";
 export const SIGNUP_FAILURE = "auth/SIGNUP_FAILURE";
@@ -49,7 +50,7 @@ export const login = (username, password) => {
       const response = await axios.post(`${API_DOMAIN}/auth/login`, { username, password });
       // response.data.sessionID에 담긴 세션아이디를 쿠키에 담기
       // 일반적인 패턴 => 서버로부터 받은 세션 ID를 Redux 상태에 저장하고, 이후에 컴포넌트에서 상태를 확인하여 쿠키를 설정하도록 하는 것이 일반적인 패턴
-      dispatch(loginSuccess(response.data, response.status));
+      dispatch(loginSuccess(response.data.sessionID, response.status));
     } catch (error) {
       console.log("Login 실패 : ", error);
       dispatch(loginFailure(error.response.status));
@@ -61,11 +62,23 @@ export const signUp = (username, password) => {
   return async (dispatch) => {
     dispatch(signUpStart());
     try {
-      const respose = await axios.post(`${API_DOMAIN}/auth/signup`, { username, password });
-      dispatch(signUpSuccess(respose.status));
+      const response = await axios.post(`${API_DOMAIN}/auth/signup`, { username, password });
+      dispatch(signUpSuccess(response.status));
     } catch (error) {
       console.log("Sign Up 실패 : ", error);
       dispatch(signUpFailure(error.response.status));
+    }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      await axios.get(`${API_DOMAIN}/auth/logout`);
+      // 세션 정보 초기화
+      dispatch({ type: LOGOUT });
+    } catch (error) {
+      console.log("Logout 실패 : ", error);
     }
   };
 };
@@ -74,6 +87,7 @@ export const signUp = (username, password) => {
 const initialState = {
   user: null,
   loading: false,
+  sessionID: null,
   status: null,
   error: null,
 };
@@ -99,6 +113,13 @@ export default function auth(state = initialState, action) {
         sessionID: null,
         status: action.payload.status,
         error: action.payload.error,
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        loading: false,
+        sessionID: null,
+        status: null,
       };
     case SIGNUP_START:
       return {
