@@ -10,7 +10,6 @@ export default function WriterContainer() {
   const navigate = useNavigate();
 
   // 로그인 되어 있지 않은 경우 경고창 표시
-  // TODO: 실제로 로그인은 이렇게 구현하지 않을듯.
   if (!username) {
     return (
       <div className="flex justify-center items-center h-screen">

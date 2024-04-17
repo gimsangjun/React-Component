@@ -25,7 +25,7 @@ export default function Header() {
               Writer
             </Link>
           </li>
-          {username !== "" ? (
+          {username !== null ? (
             <li>
               <Link
                 className="text-white hover:text-blue-400 px-3 py-2 rounded-lg mb-2 sm:mb-0"

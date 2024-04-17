@@ -27,8 +27,8 @@ export default function LoginForm({ type, onLogin, sessionID, status, onSignUp }
   useEffect(() => {
     if (status === 200) {
       // 로그인 성공
-      console.log(sessionID);
-      setCookie("sessionID", sessionID, 1);
+      // 백엔드 서버에서 해주었기 때문에 굳이 처리안해줘도 된다.
+      // setCookie("sessionID", sessionID, 1);
       navigate("/post");
     }
     if (status === 401) {
