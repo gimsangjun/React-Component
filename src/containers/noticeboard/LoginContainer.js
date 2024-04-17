@@ -1,23 +1,26 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { login, register, changeStatus } from "../../modules/noticeboard/auth";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import LoginForm from "../../components/noticeboard/auth/LoginForm";
+import { login, signUp } from "../../modules/noticeboard/auth";
+import LoadingPage from "../../pages/LoadingPage";
 
 export default function LoginContainer({ type }) {
-  const { status } = useSelector((state) => state.auth);
+  const { sessionID, loading, status } = useSelector((state) => state.auth);
+
   const dispatch = useDispatch();
 
   const onLogin = (username, password) => dispatch(login(username, password));
-  const onRegister = (username, password) => dispatch(register(username, password));
-  const onChangeStatus = (status) => dispatch(changeStatus(status));
+  const onSignUp = (username, password) => dispatch(signUp(username, password));
 
-  return (
+  return loading ? (
+    <LoadingPage />
+  ) : (
     <LoginForm
       type={type}
       onLogin={onLogin}
-      onRegister={onRegister}
-      onChangeStatus={onChangeStatus}
       status={status}
+      sessionID={sessionID}
+      onSignUp={onSignUp}
     />
   );
 }

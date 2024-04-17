@@ -15,7 +15,7 @@ export default function App() {
     <Routes>
       <Route path="/todos" element={<TodosPage />} />
       <Route path="/login" element={<LoginPage type="login" />} />
-      <Route path="/registe" element={<LoginPage type="register" />} />
+      <Route path="/signup" element={<LoginPage type="signup" />} />
       <Route path="/logout" element={<Logout />} />
       <Route path="/post/write" element={<Writer />} />
       <Route path="/post/:id" element={<PostPage />} />

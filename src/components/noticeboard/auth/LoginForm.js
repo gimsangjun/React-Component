@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import {
-  LOGIN_SUCCESS,
-  LOGIN_FAILURE,
-  REGISTER_SUCCESS,
-  REGISTER_FAILURE,
-  NORMAL,
-} from "../../../modules/noticeboard/auth";
+import { useCookies } from "react-cookie";
 import tw from "twin.macro";
 
-export default function LoginForm({ type, onLogin, onRegister, onChangeStatus, status }) {
+export default function LoginForm({ type, onLogin, sessionID, status, onSignUp }) {
   // const type = "login" or "register"
   const [formData, setFormData] = useState({
     username: "",
@@ -18,6 +12,7 @@ export default function LoginForm({ type, onLogin, onRegister, onChangeStatus, s
     passwordConfirm: "",
   });
   const [passwordError, setPasswordError] = useState("");
+  const [cookies, setCookies] = useCookies(["sessionID"]);
 
   const { username, password, passwordConfirm } = formData;
   const navigate = useNavigate();
@@ -30,39 +25,51 @@ export default function LoginForm({ type, onLogin, onRegister, onChangeStatus, s
     });
   };
 
+  useEffect(() => {
+    if (status === 200) {
+      // 로그인 성공
+      setCookies("sessionID", sessionID, { path: "/" });
+      navigate("/post");
+    }
+    if (status === 401) {
+      // 로그인 실패
+    }
+    if (status === 201) {
+      // 회원가입 성공
+      navigate("/login");
+    }
+    if (status === 400) {
+      // 이미 존재하는 유저
+    }
+    if (status === 500) {
+      // 회원가입중 오류 발생
+    }
+  }, [status, navigate, setCookies, sessionID]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (type === "register" && password !== passwordConfirm) {
-      setPasswordError("비밀번호가 일치하지 않습니다.");
-      setFormData({ ...formData, passwordConfirm: "" });
+    if (type === "signup") {
+      // 회원가입
+      if (password !== passwordConfirm) {
+        setPasswordError("비밀번호가 일치하지 않습니다.");
+      } else {
+        onSignUp(username, password);
+      }
     } else {
+      // 로그인
       setPasswordError("");
-      type === "login" ? onLogin(username, password) : onRegister(username, password);
-      setFormData({ username: "", password: "", passwordConfirm: "" });
+      onLogin(username, password);
     }
+    setFormData({ username: "", password: "", passwordConfirm: "" });
   };
-
-  useEffect(() => {
-    if (status === LOGIN_SUCCESS) {
-      navigate("/post");
-      onChangeStatus(NORMAL);
-    }
-    if (status === REGISTER_SUCCESS) {
-      navigate("/login");
-      onChangeStatus(NORMAL);
-    }
-  }, [status, navigate, onChangeStatus]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="border border-gray-300 rounded-md shadow-md p-6 w-96">
         <h1 className="text-2xl font-bold mb-6">{type === "register" ? "회원가입" : "로그인"}</h1>
-        {status === LOGIN_FAILURE && type === "login" && (
-          <ErrorMsg>로그인이 실패하였습니다.</ErrorMsg>
-        )}
-        {status === REGISTER_FAILURE && type === "register" && (
-          <ErrorMsg>회원가입이 실패하였습니다.</ErrorMsg>
-        )}
+        {status === 401 && <ErrorMsg>로그인이 실패하였습니다.</ErrorMsg>}
+        {status === 400 && <ErrorMsg>이미 존재하는 유저 입니다.</ErrorMsg>}
+        {status === 500 && <ErrorMsg>알수 없는 오류 발생</ErrorMsg>}
         <form className="w-full max-w-sm" onSubmit={handleSubmit}>
           <InputWrapper>
             <InputLabel htmlFor="username">아이디:</InputLabel>
@@ -86,7 +93,7 @@ export default function LoginForm({ type, onLogin, onRegister, onChangeStatus, s
               placeholder="비밀번호를 입력하세요."
             />
           </InputWrapper>
-          {type === "register" && (
+          {type === "signup" && (
             <InputWrapper>
               <InputLabel htmlFor="passwordConfirm">비밀번호 확인:</InputLabel>
               <InputField
@@ -104,7 +111,7 @@ export default function LoginForm({ type, onLogin, onRegister, onChangeStatus, s
         </form>
         <div className="mt-4 text-center">
           {type === "login" && (
-            <Link to="/registe" className="text-blue-500 hover:underline">
+            <Link to="/signup" className="text-blue-500 hover:underline">
               회원가입
             </Link>
           )}
@@ -119,5 +126,3 @@ const InputWrapper = tw.div`mb-4`;
 const InputLabel = tw.label`block text-gray-700 font-semibold mb-2`;
 const InputField = tw.input`w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500`;
 const SubmitButton = tw.button`w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:bg-blue-700`;
-
-// TODO : validation , 빈칸안됨, header도 logo등 추가, 회원가입시 - 비밀번호 === 비밀번호확인, 이미 가입되어있는사람, 빈칸안됨.
