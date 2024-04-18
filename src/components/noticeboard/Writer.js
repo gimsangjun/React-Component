@@ -14,7 +14,7 @@ const Writer = ({ onWrite }) => {
   function handleSummit() {
     onWrite({ title, content, tags });
   }
-
+  // TODO : 로그인한 상태에서 글써지는지 확인
   // 추가할수 있는 기능 또는 플러그인 , ex : 글씨체, image올리기 등.
   const modules = {
     toolbar: {

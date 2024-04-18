@@ -2,14 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const PostList = ({ posts }) => {
-  console.log("posts", posts);
   return (
     <div className="w-700 mx-auto">
       <h2 className="text-3xl font-bold mb-6">게시물 목록</h2>
       <ul>
         {posts.map((post) => (
-          <li key={post.id} className="bg-gray-100 rounded-lg p-6 mb-8">
-            <Link to={`/post/${post.id}`}>
+          <li key={post._id} className="bg-gray-100 rounded-lg p-6 mb-8">
+            <Link to={`/post/${post._id}`}>
               <h3 className="text-5xl font-semibold mb-4 border-b-2 border-gray-400 pb-2">
                 {post.title}
               </h3>

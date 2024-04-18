@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Updater from "../../components/noticeboard/Updater";
 import { useNavigate, useParams } from "react-router";
-import { updatePost, getPostById } from "../../api/posts";
+import PostAPI from "../../utils/api/postAPI";
 import { Link } from "react-router-dom";
 import LoadingPage from "../../pages/LoadingPage";
 
@@ -14,7 +14,7 @@ export default function UpdaterContainer() {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const fetchedPost = await getPostById(parseInt(id));
+        const fetchedPost = await PostAPI.getPostById(id);
         setPost(fetchedPost);
       } catch (error) {
         console.error("게시물을 불러오는 중에 오류가 발생했습니다:", error);
@@ -51,10 +51,9 @@ export default function UpdaterContainer() {
   // 데이터가 있으면 Updater 컴포넌트 렌더링
   const onUpdate = async (updatedPost) => {
     try {
-      console.log("update : ", id);
-      const updatedPostData = await updatePost(parseInt(id), updatedPost);
+      const updatedPostData = await PostAPI.updatePost(id, updatedPost);
       console.log("게시물 업데이트 완료:", updatedPostData);
-      navigate("/");
+      navigate(`/post/${id}`);
     } catch (error) {
       console.error("게시물 업데이트 실패:", error.message);
     }

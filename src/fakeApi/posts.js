@@ -1,5 +1,5 @@
 // 데이터를 반환하는 가짜 API 함수
-// TODO : resolve란?
+// TODO : resolve란? : promise 관련 정리한 거 있음 그거보고 추가
 const sleep = (n) => new Promise((resolve) => setTimeout(resolve, n));
 
 const posts = [

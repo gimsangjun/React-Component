@@ -8,7 +8,7 @@ import PostListPage from "./pages/PostList";
 import ErrorPage from "./pages/ErrorPage";
 import LoginPage from "./pages/LoginPage";
 import Logout from "./components/noticeboard/auth/Logout";
-// import UpdaterPage from "./pages/UpdaterPage";
+import UpdaterPage from "./pages/UpdaterPage";
 
 export default function App() {
   return (
@@ -19,7 +19,7 @@ export default function App() {
       <Route path="/logout" element={<Logout />} />
       <Route path="/post/write" element={<Writer />} />
       <Route path="/post/:id" element={<PostPage />} />
-      {/* // <Route path="/post/update/:id" element={<UpdaterPage />} /> */}
+      <Route path="/post/update/:id" element={<UpdaterPage />} />
       <Route path="/post" element={<PostListPage />} />
       <Route path="/" element={<RootPage />} />
       <Route path="*" element={<ErrorPage />} />

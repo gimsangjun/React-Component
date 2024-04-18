@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { useSelector } from "react-redux";
-import { getPostById, deletePost } from "../../api/posts";
+import PostAPI from "../../utils/api/postAPI";
 import { Link } from "react-router-dom";
 import Post from "../../components/noticeboard/Post";
 import LoadingPage from "../../pages/LoadingPage";
@@ -16,7 +16,7 @@ export default function PostContainer() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const fetchedPosts = await getPostById(parseInt(id));
+        const fetchedPosts = await PostAPI.getPostById(id);
         setPost(fetchedPosts);
       } catch (error) {
         console.error("게시물을 불러오는 중에 오류가 발생했습니다:", error);
@@ -50,9 +50,8 @@ export default function PostContainer() {
 
   const onDelete = async () => {
     try {
-      await deletePost(post.id);
-      console.log("게시물 삭제 완료:", post.id);
-      navigate("/");
+      await PostAPI.deletePost(post._id);
+      navigate("/post");
     } catch (error) {
       console.error("게시물 삭제 실패:", error.message);
     }

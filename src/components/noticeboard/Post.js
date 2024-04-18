@@ -22,14 +22,14 @@ const Post = ({ post, username, onDelete }) => {
       {/* 현재 사용자가 게시물 작성자인 경우에만 Update와 Delete 버튼 표시 */}
       {isOwner && (
         <div className="mt-4">
-          <Link to={`/post/update/${post.id}`}>
+          <Link to={`/post/update/${post._id}`}>
             <button className="bg-green-500 text-white font-semibold px-4 py-2 rounded-md mr-2">
               수정
             </button>
           </Link>
           <button
             className="bg-red-500 text-white font-semibold px-4 py-2 rounded-md"
-            onClick={() => onDelete(post.id)}
+            onClick={() => onDelete(post._id)}
           >
             삭제
           </button>
