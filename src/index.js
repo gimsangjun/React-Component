@@ -20,13 +20,16 @@ import { setProfile } from "./modules/noticeboard/auth";
 const store = legacy_createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk, logger))); // createStore deprecated됨.
 // console.log(store.getState()); // 스토어의 상태를 확인
 
-// 사용자가 새고로침하여 redux store의 sessionID가 초기화되고, 쿠키값에 sessionID가 남아있는 경우
-const sessionID = getValueFromCookie(document.cookie, "sessionID");
+// redux가 초기화되도(사용자 새로고침) 로그인 유지되게,
+// 쿠키의 HttpOnly의 값이 true라면 프론트엔드에서 쿠키 안가져와짐.(백엔드쪽 express-session코드 보면됨.)
+// axios에 withCredentials :true를 설정을 하면 자동으로 쿠키를 보냄.
+// const sessionID = getValueFromCookie(document.cookie, "sessionID");
 store.dispatch(setProfile());
-if (sessionID) {
-  // 사용자 정보 여기서는 username를 가져옴.
-  store.dispatch(setProfile());
-}
+// console.log(document.cookie);
+// if (sessionID) {
+//   // 사용자 정보 여기서는 username를 가져옴.
+//   store.dispatch(setProfile());
+// }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
