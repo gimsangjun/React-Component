@@ -41,14 +41,13 @@ export const signUpFailure = (status, error) => ({
 });
 
 // 비동기 처리, 아마 redux-thunk
-// TODO : 쿠키로 받은 sessionID값을 가지고 post글 작성하는거 해봐야됨
 export const login = (username, password) => {
   return async (dispatch) => {
     dispatch(loginStart());
     try {
       // const response = await axios.post(`${API_DOMAIN}/auth/login`, { username, password });
       const response = await authAPI.login(username, password);
-      // response.data.sessionID에 담긴 세션아이디를 쿠키에 담기
+      // 쿠키값은 axios에 withCredentials 값을 true로 줘서 자동으로 담김.
       // 일반적인 패턴 => 서버로부터 받은 세션 ID를 Redux 상태에 저장하고, 이후에 컴포넌트에서 상태를 확인하여 쿠키를 설정하도록 하는 것이 일반적인 패턴
       dispatch(loginSuccess(response.data.sessionID, response.status, response.data.username));
     } catch (error) {

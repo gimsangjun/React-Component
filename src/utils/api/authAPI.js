@@ -23,7 +23,7 @@ class AuthAPI {
     }
   }
 
-  // GET /auth/login
+  // GET /auth/logout
   static async logout() {
     try {
       await axios.get(`${API_DOMAIN}/auth/logout`);
